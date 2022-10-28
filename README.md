@@ -1,6 +1,6 @@
 ### Lab 10: SoftWare Development
 
-#### Team Number: 8
+#### Team Number 8
 
 #### Team name: Something Useful
 
@@ -12,8 +12,7 @@
 5. Tien Vu
 6. Angela Nguyen 
 
-#### Application Name: Meal Planner idek Her In Progress
-
+#### Application Name: Meal Planner
 #### Application Description: 
 Our app tracks the nutrition intake of users based on calories and nutritional value. It allows them to plan their meals on a day to day basis on a weekly calendar. Bot Meal Planner is similar to other calorie tracker apps.
 In addition, there is a social media page on the app that allows users to update friends and followers about their progress by sharing images, their calendars, and exercise activity.
@@ -27,14 +26,6 @@ Messages
 #### Meeting Plan:
 Weekly Meeting with TA: Monday @6:30 PM https://cuboulder.zoom.us/j/6808546254
 Team Meeting: @6:00 pm
-
-#### Use Case Diagram
-
-
-#### Wireframe
-
-
-
 
 
 
