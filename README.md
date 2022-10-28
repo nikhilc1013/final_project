@@ -27,6 +27,12 @@ Messages
 Weekly Meeting with TA: Monday @6:30 PM https://cuboulder.zoom.us/j/6808546254
 Team Meeting: @6:00 pm
 
+#### Use Case Diagram
+![Use Case](use_case_diagram.PNG)
+
+#### Wireframe
+![Wireframe](wireframe.PNG)
+
 
 
 
