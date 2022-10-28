@@ -5,7 +5,7 @@
 #### Team name: Something Useful
 
 #### Team Members:
-1. Jason Pabelico 
+1. Jason Pabelico  
 2. Nikhil Chakka
 3. Kash Challapalli
 4. Trajan Pei
