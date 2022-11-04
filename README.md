@@ -31,6 +31,8 @@ Team Meeting: @6:00 pm
 ![Use Case](use_case_diagram.PNG)
 
 #### Wireframe
+![Wireframe](loginwireframe.PNG)
+![Wireframe](registerwireframe.PNG)
 ![Wireframe](homepagewireframe.PNG)
 ![Wireframe](calendarwireframe.PNG)
 ![Wireframe](yourgoalswireframe.PNG)
