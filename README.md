@@ -5,12 +5,12 @@
 #### Team name: Something Useful
 
 #### Team Members:
-1. Jason Pabelico  
-2. Nikhil Chakka
-3. Kash Challapalli
-4. Trajan Pei
-5. Tien Vu
-6. Angela Nguyen 
+1. Jason Pabelico (japa9944) japa9944@colorado.edu 
+2. Nikhil Chakka (nikhilc1013) nich4416@colorado.edu 
+3. Kash Challapalli (KC-ai) kach4276@colorado.edu 
+4. Trajan Pei (trpe3369) trpe3369@colorado.edu   
+5. Tien Vu (tivu4885) tivu4885@colorado.edu   
+6. Angela Nguyen (boncannotcode) anng5164@colorado.edu 
 
 #### Application Name: Meal Planner
 #### Application Description: 
@@ -26,6 +26,12 @@ Messages
 #### Meeting Plan:
 Weekly Meeting with TA: Monday @6:30 PM https://cuboulder.zoom.us/j/6808546254
 Team Meeting: @6:00 pm
+
+#### Use Case Diagram
+![Use Case](use_case_diagram.PNG)
+
+#### Wireframe
+![Wireframe](wireframe.PNG)
 
 
 
