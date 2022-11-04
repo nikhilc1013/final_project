@@ -1,0 +1,86 @@
+Three Features:
+
+Feature 1: Login/Register
+Test Cases/Data and Test Data: 
+-For register page:
+	-Test with empty username/password “”
+		-Should give error
+	-Test with normal characters
+		-Normal
+		-Should be properly created on database
+	-Test with special characters
+		-Normal&31^%^@
+		-Should be properly created on database
+	-Test if proper username and password are added, then if it will redirect to the proper page and create the credentials on the database. Make sure values are encrypted on table
+		-Username: This
+		-Password: This
+		-Should redirect to login page with the credentials on the database
+	-Test with username that already exists
+		-Username: This
+		-Should give error saying this username already exists
+-For Login page:
+	-Test with username that exists, but wrong password
+		-Username: This
+		-Password: Wrong
+		-Should give message saying wrong username or password
+	-Test with empty username/password “”
+		-Should give message saying wrong username or password
+	-Test with username and password that doesn’t exist 
+		-Username: Notexist
+		-Password: Notexist
+		-Should give message saying wrong username or password
+	-Test with password that exists, but wrong username
+		-Username: Notexist
+		-Password: This
+		-Should give message saying wrong username or password
+	-Test to see if correct username/password redirects to the right page
+		-Username: This
+		-Password: This
+		-Should redirect to the correct page with the correct user data
+
+Test Environment: Local Machine/Docker
+
+
+
+Feature 2: Calendar(Adding Meals)
+-Test cases/data and Test results:
+	-Test sorting of meals
+		-Test adding a meal to some day 
+			-Try creating it on wednesday
+			-Should sort it to the correct day
+		-Test adding a meal at a certain time 
+			-Add multiple meals on a certain day with different times
+			-Should sort the meal within the data based on earliest to latest on that day
+	-Test saving and updating calendar
+		-Test adding meals to calendar and logging off and relogging back on the check if data is still there
+		-Should save the user’s personal calendar and personal data
+	-Test getting nutrition information for different foods
+		-Test adding up calories for more than one meal
+			-Try adding multiple meals and verifying calculations are correct
+				-Fries 100 calories, Coke 200 calories
+			-Should return calories in text to the user
+			-Compare with suggested calorie intake
+		-Total calories over week
+			-Try adding multiple meals and verifying calculations are correct
+				-Monday: Fries 100 calories,  Wednesday: Coke 200 calories = Total = 300 calories this week 
+			-Should have a box (little pop up) on the side of the calendar that updates according to total calories over the week
+
+Test Environment: Local Machine/Docker
+
+Feature 3: BMI Calculator/Calories Needed
+Test Cases/Data and Test Results:
+	-Enter random inputs and see if calculations are correct 
+		-Use decimals as inputs
+		-Test edge cases 
+			-User inputs 0 for funsies
+			-User puts too large of a number 
+			-User inputs a string
+			-Should give errors for these test cases
+			-Check potential rounding errors
+		-Should return the correct calculations unless edge case which returns error
+	-Look at changing weight and progress over time to see if BMI changes over time properly (TRACK BMI OVER TIME) 
+		-Track based on by changing meals and changing personal info(like weight or height)
+		-Should return the correct calculations
+	-Create calculator right based on credible calculator online for right calculations
+
+Test Environment: Local Machine/ Docker
