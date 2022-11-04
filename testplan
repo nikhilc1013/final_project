@@ -6,10 +6,10 @@ Test Cases/Data and Test Data:
 	-Test with empty username/password “”
 		-Should give error
 	-Test with normal characters
-		-Normal
+		-Username and password: Normal
 		-Should be properly created on database
 	-Test with special characters
-		-Normal&31^%^@
+		-Username and password: Normal&31^%^@
 		-Should be properly created on database
 	-Test if proper username and password are added, then if it will redirect to the proper page and create the credentials on the database. Make sure values are encrypted on table
 		-Username: This
@@ -17,6 +17,7 @@ Test Cases/Data and Test Data:
 		-Should redirect to login page with the credentials on the database
 	-Test with username that already exists
 		-Username: This
+		-Password: Anything
 		-Should give error saying this username already exists
 -For Login page:
 	-Test with username that exists, but wrong password
@@ -46,13 +47,15 @@ Feature 2: Calendar(Adding Meals)
 -Test cases/data and Test results:
 	-Test sorting of meals
 		-Test adding a meal to some day 
-			-Try creating it on wednesday
+			-Day is Wednesday, Time is this, meal is Fries, and this nutrtional info
 			-Should sort it to the correct day
 		-Test adding a meal at a certain time 
 			-Add multiple meals on a certain day with different times
+				-Add fries for lunch, and add rice for dinner
 			-Should sort the meal within the data based on earliest to latest on that day
 	-Test saving and updating calendar
 		-Test adding meals to calendar and logging off and relogging back on the check if data is still there
+			- Add any meals to the calendar and make sure it saves. Then logout and log back in
 		-Should save the user’s personal calendar and personal data
 	-Test getting nutrition information for different foods
 		-Test adding up calories for more than one meal
@@ -71,6 +74,7 @@ Feature 3: BMI Calculator/Calories Needed
 Test Cases/Data and Test Results:
 	-Enter random inputs and see if calculations are correct 
 		-Use decimals as inputs
+			- Weight is 50kg, Height is 1.5m
 		-Test edge cases 
 			-User inputs 0 for funsies
 			-User puts too large of a number 
@@ -79,6 +83,7 @@ Test Cases/Data and Test Results:
 			-Check potential rounding errors
 		-Should return the correct calculations unless edge case which returns error
 	-Look at changing weight and progress over time to see if BMI changes over time properly (TRACK BMI OVER TIME) 
+		- Try weight is 50kg, height is 1.5m. Change weight to 60 kg and see if it changes and updates all the correct info
 		-Track based on by changing meals and changing personal info(like weight or height)
 		-Should return the correct calculations
 	-Create calculator right based on credible calculator online for right calculations
