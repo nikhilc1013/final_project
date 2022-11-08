@@ -1,0 +1,49 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<div class="container">
+    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
+    <form action="/register" method="POST">
+        <br>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <h2>Register</h2>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row form-group">
+            <div class="col"></div>
+            <div class="col">
+                <label for="inputUsername">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" aria-describedby="username" placeholder="exampleUser">
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row form-group">
+            <div class="col"></div>
+            <div class="col">
+                <label for="inputPassword">Password:</label>
+            <input type="text" class="form-control" id="password" name="password" aria-describedby="password" placeholder="psw123">
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <p>
+                    Already have an account? 
+                    <a href="/login">Login</a>
+                    <button type="submit" class="btn btn-primary float-right">Register</button>
+                </p>
+            </div>
+            <div class="col">
+                
+            </div>
+        </div>
+    </form>
+  </div>
+
+
+
+<%- include ('../partials/footer') %>
