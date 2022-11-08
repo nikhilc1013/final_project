@@ -24,7 +24,7 @@ For users that want to gain or lose weight, as well as eating healthier, Bot Mea
 Messages
 
 #### Meeting Plan:
-Weekly Meeting with TA: Monday @6:30 PM https://cuboulder.zoom.us/j/6808546254
+Weekly Meeting with TA: Monday @6:45 PM https://cuboulder.zoom.us/j/6808546254
 Team Meeting: @6:00 pm
 
 #### Use Case Diagram
