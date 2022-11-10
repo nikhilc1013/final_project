@@ -110,7 +110,7 @@ app.get('/', (req, res) =>{
               api_key: "something",
             };
             req.session.save();
-            res.redirect("/discover");
+            res.redirect("/home");
         }
         else
         {
