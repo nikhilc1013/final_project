@@ -161,6 +161,47 @@ app.get('/progress', (req, res) => {
     res.render('pages/meals');
   });
 
+  app.post('/meals', (req, res) => {
+    var name = req.body.name;
+    var carbs = req.body.carbs;
+    var sodium = req.body.sodium;
+    var sugars = req.body.sugars;
+    var protein = req.body.protein;
+    var cals = req.body.cals;
+    const query = 'insert into meals (name, carbs, sodium, sugars, protein, cals) values ($1, $2, $3, $4, $5, $6) returning *'
+    db.any(query, [name, carbs, sodium, sugars, protein, cals])
+    .then(function(data) {
+      res.redirect('/meals');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/meals");
+    });
+  });
+
+
+  app.get('/calendarmeals', (req, res) => {
+    res.render('pages/calendarmeals');
+  });
+
+  app.post('/calendarmeals', (req, res) => {
+    var name = req.body.name;
+    var carbs = req.body.carbs;
+    var sodium = req.body.sodium;
+    var sugars = req.body.sugars;
+    var protein = req.body.protein;
+    var cals = req.body.cals;
+    const query = 'insert into meals (name, carbs, sodium, sugars, protein, cals) values ($1, $2, $3, $4, $5, $6) returning *'
+    db.any(query, [name, carbs, sodium, sugars, protein, cals])
+    .then(function(data) {
+      res.redirect('/meals');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/meals");
+    });
+  });
+
 
 
   app.get('/logout', (req, res) => {
