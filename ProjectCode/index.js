@@ -175,7 +175,7 @@ app.get('/progress', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/meals");
+      res.redirect("/calendar");
     });
   });
 
