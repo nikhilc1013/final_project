@@ -12,7 +12,7 @@
 5. Tien Vu (tivu4885) tivu4885@colorado.edu   
 6. Angela Nguyen (boncannotcode) anng5164@colorado.edu 
 
-#### Application Name: Meal Planner
+#### Application Name: EMPEE
 #### Application Description: 
 Our app tracks the nutrition intake of users based on calories and nutritional value. It allows them to plan their meals on a day to day basis on a weekly calendar. Bot Meal Planner is similar to other calorie tracker apps.
 In addition, there is a social media page on the app that allows users to update friends and followers about their progress by sharing images, their calendars, and exercise activity.
