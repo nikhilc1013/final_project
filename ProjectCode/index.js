@@ -58,6 +58,8 @@ const dbConfig = {
       app.listen(3000);
 console.log('Server is listening on port 3000');
 
+const all_meals = `SELECT meals.name, meals.cals FROM meals ORDER BY meals.name ASC;`;
+
 
 app.get('/', (req, res) =>{
     res.redirect('/login'); //this will call the /anotherRoute route in the API
@@ -108,6 +110,7 @@ app.get('/', (req, res) =>{
         {
             req.session.user = {
               api_key: "something",
+              username: req.body.username,
             };
             req.session.save();
             res.redirect("/home");
@@ -181,7 +184,21 @@ app.get('/progress', (req, res) => {
 
 
   app.get('/calendarmeals', (req, res) => {
-    res.render('pages/calendarmeals');
+    // console.log(all_meals);
+    // res.render('pages/calendarmeals',{
+    //   all_meals,
+    // });
+    db.any(all_meals,[])
+    .then((mealsList) => {
+      res.render("pages/calendarmeals", {
+        mealsList,
+      });
+    })
+    .catch((err) => {
+      res.render("pages/calendarmeals", {
+        courses: [],
+      });
+    });
   });
 
   app.post('/calendarmeals', (req, res) => {
@@ -194,11 +211,11 @@ app.get('/progress', (req, res) => {
     const query = 'insert into meals (name, carbs, sodium, sugars, protein, cals) values ($1, $2, $3, $4, $5, $6) returning *'
     db.any(query, [name, carbs, sodium, sugars, protein, cals])
     .then(function(data) {
-      res.redirect('/meals');
+      res.redirect('/calendar');
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/meals");
+      res.redirect("/calendarmeals");
     });
   });
 
