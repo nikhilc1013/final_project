@@ -2,7 +2,30 @@
 <%- include ('../partials/menu') %>
 
 <main>
-  
+      <%                 
+      var all35cardsfordec = "";
+      var meals = userMeals;
+      all35cardsfordec += '<div class="row"><div class="col"><div class="card"><div id="November27" class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+      all35cardsfordec += '<div class="col"><div class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+      all35cardsfordec += '<div class="col"><div class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+      all35cardsfordec += '<div class="col"><div class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+      for (var i = 4; i < 35; i++){ 
+        if(i % 7 == 0)
+        {
+            all35cardsfordec += '</div><div class="row">';
+        }
+        all35cardsfordec += '<div class="col"><div class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text">December ' + (i-3).toString() + '</p>';
+        meals.forEach(function(item){ 
+          if(item.dayofmonth == (i - 3))
+          {
+            all35cardsfordec += '<p class="card-text">ID: ' + item.id + '</p>' + '<p class="card-text">Time of Meal: ' + item.timeofmeal + '</p>' + '<p class="card-text">Meal Name: ' + item.meal + '</p>';
+          }
+        });
+      all35cardsfordec += '</div></div></div>';
+      }
+      all35cardsfordec += '</div>';
+      %> 
+      <%- all35cardsfordec %> 
 </main>
 
 <%- include ('../partials/footer') %>
