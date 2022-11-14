@@ -16,7 +16,9 @@ cals int NOT NULL
 
 DROP TABLE IF EXISTS calendars CASCADE;
 CREATE TABLE calendars(
-dateandtime timestamp NOT NULL,
+id int PRIMARY KEY,
+dayofmonth int NOT NULL,
+timeofmeal time NOT NULL,
 meal VARCHAR(50) NOT NULL,
 username VARCHAR(50) NOT NULL,
 FOREIGN KEY (meal) REFERENCES meals (name),

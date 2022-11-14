@@ -5,9 +5,13 @@
     <div class = "container event-container">
         <form class="col" action="/calendarmeals" method = "post" id = "modalform">
             <div class="col-md-4">
-              <label for="validationDefault03" class="form-label">Date and Time</label>
-              <input type="time" class="form-control" id="" name="name"value="Enter a name" required>
+              <label for="validationDefault03" class="form-label">Time</label>
+              <input type="time" class="form-control" id="" name="time"value="Enter a name" required>
             </div>
+            <div class="col-md-4">
+                <label for="validationDefault03" class="form-label">Date # of December(ex. enter 10 for December 10)</label>
+                <input type="number" class="form-control" id="" name="date"value="Enter a name" required>
+              </div>
             <div class="col-md-3">
                 <label for="validationDefault04" class="form-label">Meal</label>
                 <select class="form-select" id="eventModalityBox">
