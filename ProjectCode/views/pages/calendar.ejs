@@ -18,7 +18,7 @@
         meals.forEach(function(item){ 
           if(item.dayofmonth == (i - 3))
           {
-            all35cardsfordec += '<p class="card-text">ID: ' + item.id + '</p>' + '<p class="card-text">Time of Meal: ' + item.timeofmeal + '</p>' + '<p class="card-text">Meal Name: ' + item.meal + '</p>';
+            all35cardsfordec += '<div class="col-sm-12"><div class="card"><div class="card-body"><p class="card-text">ID: ' + item.id + '</p>' + '<p class="card-text">Time of Meal: ' + item.timeofmeal + '</p>' + '<p class="card-text">Meal Name: ' + item.meal + '</p></div></div></div>';
           }
         });
       all35cardsfordec += '</div></div></div>';
