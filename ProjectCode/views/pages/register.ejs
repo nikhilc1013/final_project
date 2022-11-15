@@ -1,10 +1,9 @@
-<%- include ('../partials/header') %>
-<%- include ('../partials/menu') %>
+<!-- 
 
 <main>
   <div class="container">
-    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
-    <div class="col"><%- include ('../partials/message') %></div>
+    -- THE REST OF YOUR HTML CODE GOES HERE 
+    <div class="col">- include ('../partials/message') %></div>
     <form action="/register" method="post" class="col">
         <div class="col-md-4">
           <label for="validationDefault03" class="form-label">Username</label>
@@ -18,5 +17,31 @@
     </form>
   </div>
 </main>
+ -->
 
-<%- include ('../partials/footer') %>
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+<div class="col"><%- include ('../partials/message') %></div>
+
+<main>
+    <div style="width: 100%; text-align: center;">
+        <div style="width: 50%; min-width: 250px; display: inline-block;">
+            <h1>Register your Account</h1>
+            <form method="POST" action="/register">
+                <div style="text-align: left;">
+                    <label for="usernameInput">Username</label>
+                    <input name="username" type="text" class="form-control" id="usernameInput" placeholder="Enter Username">
+                </div>
+                <div style="text-align: left;">
+                    <label for="passwordInput">Password</label>
+                    <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Enter Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Register Account</button>
+            </form>
+              Already have an account? <a href="/login">Login here.</a>
+          </div>
+        </div>
+    </div>
+  </main>
+  
+  <%- include ('../partials/footer') %>
