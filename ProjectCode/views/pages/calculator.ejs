@@ -1,0 +1,35 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div class = "container event-container">
+        <form class="col" action="/calculator" method = "post" id = "modalform">
+            
+            <div class="col-md-4">
+                <label for="validationDefault03" class="form-label">Weight (kg)</label>
+                <input type="number" class="form-control" id=""name="weight" value=""required>
+            </div>
+            <div class="col-md-3">
+                <label for="validationDefault04" class="form-label">Height (cm)</label>
+                <input type="number" class="form-control" id="" name="height" value=""required>
+            </div>
+            <div class="col-md-3">
+              <label for="validationDefault04" class="form-label">Age</label>
+              <input type="number" class="form-control" id="" name="age"value=""required>
+          </div>
+          <div class="col-md-3">
+            <label for="validationDefault04" class="form-label">Sex</label>
+            <select class="form-select">
+                <option value="dropdown-item">Choose an option</a>
+                <option value="dropdown-item">Male</a>
+                <option value="dropdown-item">Female</a>
+                <option value="dropdown-item">Other</a>
+            </select>
+          <div class="col-12">
+              <button class="btn btn-primary" id="submit-button" type="submit">Submit form</button>
+          </div>
+        </form>
+      </div>
+</main>
+
+<%- include ('../partials/footer') %>
