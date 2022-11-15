@@ -222,8 +222,37 @@ app.get('/progress', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/calendarmeals");
+      res.redirect("/calendarmeals"); 
     });
+  });
+
+  app.get('/calculator', (req, res) => {
+    res.render('pages/calculator');
+  });
+
+  app.post('/calculator', (req, res) => {
+    var weight = req.body.weight;
+    var height = req.body.height;
+    var age = req.body.age;
+    var gender = req.body.gender;
+    var bmr = 0;
+
+    if(gender == 'women'){
+      bmr = 655+(9.6*weight)+(1.8*height)-(4.7*age);
+    }
+    else if (gender == 'man'){
+      bmr = 66+(13.7*weight)+(5*height)-(6.8*age);
+    }
+
+    const updatequery = "UPDATE users SET bmr=$1 WHERE user=$2";
+    db.any(updatequery, [bmr, req.session.user.username])
+    .then(function(data){
+      res.redirect("/calendar");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   });
 
 
