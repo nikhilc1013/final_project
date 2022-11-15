@@ -169,10 +169,6 @@ app.get('/progress', (req, res) => {
     });
   });
 
-  app.get('/goals', (req, res) => {
-    res.render('pages/goals');
-  });
-
   app.get('/meals', (req, res) => {
     res.render('pages/meals');
   });
