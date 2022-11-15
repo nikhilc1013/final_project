@@ -65,15 +65,17 @@ const user_meals_on_calendar = `SELECT calendars.dayofmonth, calendars.id, calen
 var mealsCount = 0;
 
 app.get('/', (req, res) =>{
-    res.redirect('/login'); //this will call the /anotherRoute route in the API
-  });
+  if(req.session.user) res.redirect('/home');
+  res.redirect('/login'); //this will call the /anotherRoute route in the API
+});
 
 
 
 
 
   app.get('/register', (req, res) => {
-    res.render('pages/register');
+    if(req.session.user) res.redirect('/home');
+    else res.render('pages/register');
   });
 
 
@@ -98,7 +100,8 @@ app.get('/', (req, res) =>{
 
 
   app.get('/login', (req, res) => {
-    res.render('pages/login');
+    if(req.session.user) res.redirect('/home');
+    else res.render('pages/login');
   });
 
 
