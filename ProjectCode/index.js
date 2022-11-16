@@ -190,35 +190,55 @@ app.get('/progress', (req, res) => {
   });
 
   app.post('/calendar', (req, res) => {
-    var week = parseInt(req.body.week);
-    var mealss;
-    db.any(all_meals,[])
-    .then((mealsList) => {
-      mealss = mealsList;
-    })
-    .catch((err) => {
-      console.log(err);
-        mealss = [];
-    });
-
-
-
-    db.any(user_meals_on_calendar,[])
-    .then((userMeals) => {
-      res.render("pages/calendar", {
-        userMeals,
-        week,
-        mealsList:mealss,
+    console.log(req.body.identifier);
+    if(req.body.identifier == "changeweek")
+    {
+      var week = parseInt(req.body.week);
+      var mealss;
+      db.any(all_meals,[])
+      .then((mealsList) => {
+        mealss = mealsList;
+      })
+      .catch((err) => {
+        console.log(err);
+          mealss = [];
       });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.render("pages/calendar", {
-        userMeals: [],
-        mealsList: [],
-        week,
+
+
+
+      db.any(user_meals_on_calendar,[])
+      .then((userMeals) => {
+        res.render("pages/calendar", {
+          userMeals,
+          week,
+          mealsList:mealss,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.render("pages/calendar", {
+          userMeals: [],
+          mealsList: [],
+          week,
+        });
       });
-    });
+    }
+    else if(req.body.identifier == "makemeal")
+    {
+      var time = req.body.time;
+      var date = req.body.date;
+      var meal = req.body.meal;
+      const query = 'insert into calendars (id, dayofmonth, timeofmeal, meal, username) values ($1, $2, $3, $4, $5) returning *'
+      db.any(query, [mealsCount,date, time, meal, req.session.user.username])
+      .then(function(data) {
+        mealsCount++;
+        res.redirect('/calendar');
+      })
+      .catch((err) => {
+        console.log(err);
+        res.redirect('/calendar');
+      });
+    }
   });
 
   app.get('/meals', (req, res) => {
@@ -251,22 +271,6 @@ app.get('/progress', (req, res) => {
     .catch((err) => {
       console.log(err);
       res.redirect("/calendar");
-    });
-  });
-
-  app.post('/calendarmeals', (req, res) => {
-    var time = req.body.time;
-    var date = req.body.date;
-    var meal = req.body.meal;
-    const query = 'insert into calendars (id, dayofmonth, timeofmeal, meal, username) values ($1, $2, $3, $4, $5) returning *'
-    db.any(query, [mealsCount,date, time, meal, req.session.user.username])
-    .then(function(data) {
-      mealsCount++;
-      res.redirect('/calendar');
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect('/calendar');
     });
   });
 
