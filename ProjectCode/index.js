@@ -58,7 +58,7 @@ const dbConfig = {
       app.listen(3000);
 console.log('Server is listening on port 3000');
 
-const all_meals = `SELECT meals.name, meals.cals FROM meals ORDER BY meals.name ASC;`;
+const all_meals = `SELECT * FROM meals ORDER BY meals.name ASC;`;
 
 const user_meals_on_calendar = `SELECT calendars.dayofmonth, calendars.id, calendars.timeofmeal, calendars.meal FROM calendars ORDER BY calendars.timeofmeal ASC;`;
 
@@ -159,21 +159,81 @@ app.get('/progress', (req, res) => {
 
 
   app.get('/calendar', (req, res) => {
+    var mealss;
+    db.any(all_meals,[])
+    .then((mealsList) => {
+      mealss = mealsList;
+    })
+    .catch((err) => {
+      console.log(err);
+        mealss = [];
+    });
+
+
+
     db.any(user_meals_on_calendar,[])
     .then((userMeals) => {
       res.render("pages/calendar", {
         userMeals,
+        week:0,
+        mealsList:mealss,
       });
     })
     .catch((err) => {
+      console.log(err);
       res.render("pages/calendar", {
         userMeals: [],
+        mealsList: [],
+        week:0,
+      });
+    });
+  });
+
+  app.post('/calendar', (req, res) => {
+    var week = parseInt(req.body.week);
+    var mealss;
+    db.any(all_meals,[])
+    .then((mealsList) => {
+      mealss = mealsList;
+    })
+    .catch((err) => {
+      console.log(err);
+        mealss = [];
+    });
+
+
+
+    db.any(user_meals_on_calendar,[])
+    .then((userMeals) => {
+      res.render("pages/calendar", {
+        userMeals,
+        week,
+        mealsList:mealss,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.render("pages/calendar", {
+        userMeals: [],
+        mealsList: [],
+        week,
       });
     });
   });
 
   app.get('/meals', (req, res) => {
-    res.render('pages/meals');
+    db.any(all_meals, [])
+    .then(function(meals){
+      res.render("pages/meals", {
+        meals,
+      });
+    })
+    .catch((err) => {
+      res.render("pages/meals", {
+        meals:[],
+      });
+      console.log(err);
+    });
   });
 
   app.post('/meals', (req, res) => {
@@ -194,29 +254,10 @@ app.get('/progress', (req, res) => {
     });
   });
 
-
-  app.get('/calendarmeals', (req, res) => {
-    // console.log(all_meals);
-    // res.render('pages/calendarmeals',{
-    //   all_meals,
-    // });
-    db.any(all_meals,[])
-    .then((mealsList) => {
-      res.render("pages/calendarmeals", {
-        mealsList,
-      });
-    })
-    .catch((err) => {
-      res.render("pages/calendarmeals", {
-        mealsList: [],
-      });
-    });
-  });
-
   app.post('/calendarmeals', (req, res) => {
     var time = req.body.time;
     var date = req.body.date;
-    var meal = "Enter a name";
+    var meal = req.body.meal;
     const query = 'insert into calendars (id, dayofmonth, timeofmeal, meal, username) values ($1, $2, $3, $4, $5) returning *'
     db.any(query, [mealsCount,date, time, meal, req.session.user.username])
     .then(function(data) {
@@ -225,7 +266,7 @@ app.get('/progress', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/calendarmeals"); 
+      res.redirect('/calendar');
     });
   });
 
@@ -234,17 +275,21 @@ app.get('/progress', (req, res) => {
   });
 
   app.post('/calculator', (req, res) => {
+    console.log(req.body.gender);
     var weight = req.body.weight;
     var height = req.body.height;
     var age = req.body.age;
     var gender = req.body.gender;
     var bmr = 0;
 
-    if(gender == 'women'){
+    if(gender == 'female'){
       bmr = 655+(9.6*weight)+(1.8*height)-(4.7*age);
     }
-    else if (gender == 'man'){
+    else if (gender == 'male'){
       bmr = 66+(13.7*weight)+(5*height)-(6.8*age);
+    }
+    else if(gender == 'other'){
+      bmr = 66+(13.7*weight)+(5*height)-(6.8*age);;
     }
 
     const updatequery = "UPDATE users SET bmr=$1 WHERE user=$2";
