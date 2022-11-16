@@ -2,37 +2,78 @@
 <%- include ('../partials/menu') %>
 
 <main>
-    <div class = "container event-container">
-        <form class="col" action="/meals" method = "post" id = "modalform">
-            <div class="col-md-4">
-              <label for="validationDefault03" class="form-label">Name</label>
-              <input type="text" class="form-control" id="" name="name"value="Enter a name" required>
+      <div class = "container event-container">
+    
+        <div style="text-align:center;" class = "container">
+          <button style="width:65%;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+            <p style="font-size:110%;">Add Meal to Meal Database</p>
+          </button>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" style="width:1000px" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <form class="col" action="/meals" method = "post" id = "modalform">
+                    <div class="col-md-4">
+                      <label for="validationDefault03" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="" name="name"value="Enter a name" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationDefault04" class="form-label">Calories</label>
+                        <input type="number" class="form-control" id="" name="cals"value="Enter a name" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationDefault03" class="form-label">Protein</label>
+                        <input type="number" class="form-control" id=""name="protein" value=""required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationDefault04" class="form-label">Sodium</label>
+                        <input type="number" class="form-control" id="" name="sodium" value=""required>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="validationDefault04" class="form-label">Carbohydrates</label>
+                      <input type="number" class="form-control" id="" name="carbs"value=""required>
+                  </div>
+                  <div class="col-md-3">
+                      <label for="validationDefault04" class="form-label">Total Sugars</label>
+                      <input type="number" class="form-control" id="" name="sugars" value=""required>
+                  </div>
+                  <div class="col-12">
+                      <button class="btn btn-primary" id="submit-button" type="submit">Submit form</button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div class="col-md-3">
-                <label for="validationDefault04" class="form-label">Calories</label>
-                <input type="number" class="form-control" id="" name="cals"value="Enter a name" required>
-            </div>
-            <div class="col-md-4">
-                <label for="validationDefault03" class="form-label">Protein</label>
-                <input type="number" class="form-control" id=""name="protein" value=""required>
-            </div>
-            <div class="col-md-3">
-                <label for="validationDefault04" class="form-label">Sodium</label>
-                <input type="number" class="form-control" id="" name="sodium" value=""required>
-            </div>
-            <div class="col-md-3">
-              <label for="validationDefault04" class="form-label">Carbohydrates</label>
-              <input type="number" class="form-control" id="" name="carbs"value=""required>
           </div>
-          <div class="col-md-3">
-              <label for="validationDefault04" class="form-label">Total Sugars</label>
-              <input type="number" class="form-control" id="" name="sugars" value=""required>
-          </div>
-          <div class="col-12">
-              <button class="btn btn-primary" id="submit-button" type="submit">Submit form</button>
-          </div>
-        </form>
-      </div>
+        </div>
+    </div>
+    <div style="text-align:right;" class = "container event-container">
+    <table class="table table-striped">
+        <style>
+          table
+          {
+            width:1000px;
+            height:100px;
+          }
+        </style>
+        <thead>
+          <tr><th>Name</th><th>Calories</th><th>Carbohydrates</th><th>Sodium</th><th>Sugars</th><th>Protein</th></tr>
+        </thead>
+        <tbody>
+          <% 
+          var mealslist = meals;
+          var entry = "";
+          if (mealslist) { 
+            mealslist.forEach(function(item){ 
+              entry += '<tr><td>' + item.name + '</td>' + '<td>' + item.cals + '</td>' + '<td>' + item.carbs + '</td>' + '<td>' + item.sodium + '</td>' + '<td>' + item.sugars + '</td>' + '<td>' + item.protein + '</td></tr>';
+            }); 
+            }%> 
+           <%- entry %> 
+        </tbody>
+      </table>
+    </div>
 </main>
 
 <%- include ('../partials/footer') %>

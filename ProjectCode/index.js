@@ -58,7 +58,7 @@ const dbConfig = {
       app.listen(3000);
 console.log('Server is listening on port 3000');
 
-const all_meals = `SELECT meals.name, meals.cals FROM meals ORDER BY meals.name ASC;`;
+const all_meals = `SELECT * FROM meals ORDER BY meals.name ASC;`;
 
 const user_meals_on_calendar = `SELECT calendars.dayofmonth, calendars.id, calendars.timeofmeal, calendars.meal FROM calendars ORDER BY calendars.timeofmeal ASC;`;
 
@@ -165,6 +165,7 @@ app.get('/progress', (req, res) => {
       mealss = mealsList;
     })
     .catch((err) => {
+      console.log(err);
         mealss = [];
     });
 
@@ -179,6 +180,7 @@ app.get('/progress', (req, res) => {
       });
     })
     .catch((err) => {
+      console.log(err);
       res.render("pages/calendar", {
         userMeals: [],
         mealsList: [],
@@ -195,6 +197,7 @@ app.get('/progress', (req, res) => {
       mealss = mealsList;
     })
     .catch((err) => {
+      console.log(err);
         mealss = [];
     });
 
@@ -209,6 +212,7 @@ app.get('/progress', (req, res) => {
       });
     })
     .catch((err) => {
+      console.log(err);
       res.render("pages/calendar", {
         userMeals: [],
         mealsList: [],
@@ -218,7 +222,18 @@ app.get('/progress', (req, res) => {
   });
 
   app.get('/meals', (req, res) => {
-    res.render('pages/meals');
+    db.any(all_meals, [])
+    .then(function(meals){
+      res.render("pages/meals", {
+        meals,
+      });
+    })
+    .catch((err) => {
+      res.render("pages/meals", {
+        meals:[],
+      });
+      console.log(err);
+    });
   });
 
   app.post('/meals', (req, res) => {
@@ -251,7 +266,7 @@ app.get('/progress', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/calendarmeals"); 
+      res.redirect('/calendar');
     });
   });
 
@@ -274,7 +289,7 @@ app.get('/progress', (req, res) => {
       bmr = 66+(13.7*weight)+(5*height)-(6.8*age);
     }
     else if(gender == 'other'){
-      bmr = 0;
+      bmr = 66+(13.7*weight)+(5*height)-(6.8*age);;
     }
 
     const updatequery = "UPDATE users SET bmr=$1 WHERE user=$2";

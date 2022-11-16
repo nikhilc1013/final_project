@@ -3,6 +3,7 @@
 
 <main>
   <div class = "container event-container">
+    <div class = "container">
     <form class="col" action="/calendar" method = "post">
       <div class="col-md-3">
         <label for="validationDefault04" class="form-label">Change to See Different Week</label>
@@ -14,15 +15,17 @@
             <option value="3">December 18 - 24</a>
             <option value="4">December 25 - 31</a>
         </select>
+      </div>
       <div class="col-12">
           <button class="btn btn-primary" id="submit-button" type="submit">Change</button>
       </div>
     </form>
+    </div>
 
-    <div class = "container event-container">
-    <button style="text-align:center;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#something">
-      Add Meal to Calendar
-    </button>
+    <div style="text-align:center;" class = "container">
+      <button style="width:65%;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#something">
+        <p style="font-size:110%;">Add Meal to Calendar</p>
+      </button>
     </div>
     
     <!-- Modal -->
