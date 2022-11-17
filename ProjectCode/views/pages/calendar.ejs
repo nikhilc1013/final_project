@@ -16,6 +16,7 @@
             <option value="4">December 25 - 31</a>
         </select>
       </div>
+      <input type="hidden" id="postId" name="identifier" value="changeweek" />
       <div class="col-12">
           <button class="btn btn-primary" id="submit-button" type="submit">Change</button>
       </div>
@@ -33,7 +34,7 @@
       <div class="modal-dialog modal-dialog-centered" style="width:1000px" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <form class="col" action="/calendarmeals" method = "post" id = "modalform">
+            <form class="col" action="/calendar" method = "post" id = "modalform">
               <div class="col-md-4">
                 <label for="validationDefault03" class="form-label">Time</label>
                 <input type="time" class="form-control" id="" name="time"value="Enter a name" required>
@@ -59,6 +60,7 @@
                         <%- optionsList %> 
                   </select>
               </div>
+              <input type="hidden" id="postId" name="identifier" value="makemeal" />
               <div class="col-12">
                   <button class="btn btn-primary" id="submit-button" type="submit">Submit form</button>
               </div>
