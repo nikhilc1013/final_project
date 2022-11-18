@@ -38,60 +38,44 @@
     }
   </style>
   <body>
-    <div class="col-xs-12 text-center">
-      <h2>Donut Chart</h2>
-    </div>
-  
-    <div id="donut-chart"></div>
+    <h1>Calories</h1>
+    <div id="Calories"></div>
+    <h1>Carbohydrates</h1>
+    <div id="Carbohydrates"></div>
+    <h1>Sodium</h1>
+    <div id="Sodium"></div>
+    <h1>Sugars</h1>
+    <div id="Sugars"></div>
+    <h1>Protein</h1>
+    <div id="Protein"></div>
   
     <script>
-      var chart = bb.generate({
-        data: {
-          columns: [
-            ["Blue", 2],
-            ["orange", 4],
-            ["green", 3],
-          ],
-          type: "donut",
-          onclick: function (d, i) {
-            console.log("onclick", d, i);
+      function loadPieCharts(category){
+        var chart = bb.generate({
+          data: {
+            columns: [
+              [category, 2],
+              ["test", 4],
+            ],
+            type: "donut",
+            onclick: function (d, i) {
+              console.log("onclick", d, i);
+            },
+            onover: function (d, i) {
+              console.log("onover", d, i);
+            },
+            onout: function (d, i) {
+              console.log("onout", d, i);
+            },
           },
-          onover: function (d, i) {
-            console.log("onover", d, i);
+          donut: {
+            title: "70",
           },
-          onout: function (d, i) {
-            console.log("onout", d, i);
-          },
-        },
-        donut: {
-          title: "70",
-        },
-        bindto: "#donut-chart",
-      });
-
-      var chart2 = bb.generate({
-        data: {
-          columns: [
-            ["Blue", 2],
-            ["orange", 4],
-            ["green", 3],
-          ],
-          type: "donut",
-          onclick: function (d, i) {
-            console.log("onclick", d, i);
-          },
-          onover: function (d, i) {
-            console.log("onover", d, i);
-          },
-          onout: function (d, i) {
-            console.log("onout", d, i);
-          },
-        },
-        donut: {
-          title: "70",
-        },
-        bindto: "#donut-chart",
-      });
+          bindto: "#" + category,
+        });
+      }
+      const categories = ["Calories", "Carbohydrates", "Sodium", "Sugars", "Protein"];
+      categories.forEach(loadPieCharts);
     </script>
   </body>
 </html>
