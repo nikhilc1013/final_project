@@ -85,10 +85,11 @@ app.get('/', (req, res) =>{
     var username = req.body.username;
     const hash = await bcrypt.hash(req.body.password, 10);
 
-    const query ='insert into users (username,password) values ($1,$2) returning *';
+    const query ='insert into users (username,password, bmr) values ($1,$2, $3) returning *';
   db.any(query, [
     username,
     hash,
+    0,
   ])
   .then(function (data) {
     res.redirect('/login');
@@ -167,7 +168,6 @@ app.get('/progress', (req, res) => {
         var getsumofdate = "SELECT sum(meals.cals), sum(meals.carbs), sum(meals.sodium), sum(meals.sugars), sum(meals.protein) FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
         db.any(getsumofdate,[req.session.user.username, daterequestedbyuser,])
          .then((data2) => {
-           console.log(data2);
            res.render('pages/progress',[data2, data[0].bmr, daterequestedbyuser]);
          })
          .catch((err) => {
@@ -182,6 +182,34 @@ app.get('/progress', (req, res) => {
     });
   });
 
+  
+  app.post('/progress', (req, res) => {
+    var userbmr;  
+  var getbmr = "select bmr from users where users.username = $1";
+    db.any(getbmr,[req.session.user.username])
+    .then((data) => {
+      console.log("Inside then", data[0].bmr, data[0]);
+      if (data[0].bmr == 0){
+        res.redirect('/calculator');
+      }
+      else {
+        var daterequestedbyuser = req.body.date;
+        var getsumofdate = "SELECT sum(meals.cals), sum(meals.carbs), sum(meals.sodium), sum(meals.sugars), sum(meals.protein) FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
+        db.any(getsumofdate,[req.session.user.username, daterequestedbyuser,])
+         .then((data2) => {
+           res.render('pages/progress',[data2, data[0].bmr, daterequestedbyuser]);
+         })
+         .catch((err) => {
+           console.log(err);
+           res.redirect('/calendar');
+         });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      userbmr = 0;
+    });
+  });
 
   app.get('/calendar', (req, res) => {
     var mealss;
@@ -318,12 +346,13 @@ app.get('/progress', (req, res) => {
       bmr = 66+(13.7*weight)+(5*height)-(6.8*age);
     }
     else if(gender == 'other'){
-      bmr = 66+(13.7*weight)+(5*height)-(6.8*age);;
+      bmr = 66+(13.7*weight)+(5*height)-(6.8*age);
     }
 
-    const updatequery = "UPDATE users SET bmr=$1 WHERE user=$2";
+    const updatequery = "UPDATE users SET bmr=$1 WHERE username=$2;";
     db.any(updatequery, [bmr, req.session.user.username])
     .then(function(data){
+      console.log(bmr);
       res.redirect("/calendar");
     })
     .catch((err) => {
