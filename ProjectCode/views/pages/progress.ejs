@@ -37,22 +37,62 @@
       text-align: center;
       background:#ddd;
     }
-</style>
 
-<main>
-    <div class="space">
-        <div class="progress" padding="50px">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" id="bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-        </div>
-    </div>
-    <p id="progress">
-        You have met 0% of your goal.
-    </p>
+    .pie {
+      --p:20;
+      --b:22px;
+      --c:darkred;
+      --w:150px;
+      
+      width:var(--w);
+      aspect-ratio:1;
+      position:relative;
+      display:inline-grid;
+      margin:5px;
+      place-content:center;
+      font-size:25px;
+      font-weight:bold;
+      font-family:sans-serif;
+      color: rgb(0, 0, 0);
+    }
+    .pie:before, .pie:after {
+      content:"";
+      position:absolute;
+      border-radius:50%;
+    }
+    .pie:before {
+      inset:0;
+      background:
+        radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+        conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+      -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+              mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+    }
+    .pie:after {
+      inset:calc(50% - var(--b)/2);
+      background:var(--c);
+      transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+    }
+    .animate {
+      animation:p 1s .5s both;
+    }
+    @keyframes p {
+      from{--p:0}
+    }
 
+    #pieCharts {
+      margin-top: 50px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-    <div id="goal" aria-valuenow="0">
-            Your goal is 2000 calories.
-    </div>
+    .col{
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 25px;
+      display: inline-block;
+      padding: 5px;
+    }
 
     #pieCharts {
       margin-top: 50px;
@@ -71,19 +111,17 @@
   </style>
   <body>
 
-    <form id="form2">
-        <div class="form-group">
-            <label for="goal">Goal</label>
-            <input type="number" class="form-control" id="goalInput" placeholder="goal">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
-
+    <table id="pieCharts">
+      <tr id="headings"></tr>
+      <tr id="pies"></tr>
+    </table>
+  
     <script>
-        var form1 = document.getElementById('form');
-        var form2 = document.getElementById('form2');
-        var bar = document.getElementById('bar');
-        var goal = 2000;
+      function loadPieCharts(category){
+        // headings
+        var headingsRow = document.getElementById("headings");
+        var heading = headingsRow.insertCell();
+        heading.innerHTML = `<h1 style="margin:30px;">` + category + `</h1>`;
 
         form1.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -108,12 +146,6 @@
       const categories = ["Calories", "Carbohydrates", "Sodium", "Sugars", "Protein"];
       categories.forEach(loadPieCharts);
 
-        form2.addEventListener('submit', (e) => {
-            e.preventDefault();
-            var goalInput = Number(document.getElementById('goalInput').value);
-            document.getElementById('goal').innerHTML = "Your goal is: " + goalInput + " calories.";
-            goal = goalInput;
-        });
     </script>
   </body>
 </main>
