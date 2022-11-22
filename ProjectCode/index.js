@@ -60,9 +60,10 @@ console.log('Server is listening on port 3000');
 
 const all_meals = `SELECT * FROM meals ORDER BY meals.name ASC;`;
 
-const user_meals_on_calendar = `SELECT calendars.dayofmonth, calendars.id, calendars.timeofmeal, calendars.meal FROM calendars ORDER BY calendars.timeofmeal ASC;`;
+const user_meals_on_calendar = `SELECT calendars.dayofmonth, calendars.id, calendars.timeofmeal, calendars.meal FROM calendars WHERE username=$1 ORDER BY calendars.timeofmeal ASC;`;
 
 var mealsCount = 0;
+var mealsCountquery = 'SELECT COUNT(calendars.id) AS count FROM calendars;'
 
 app.get('/', (req, res) =>{
   if(req.session.user) res.redirect('/home');
@@ -165,10 +166,13 @@ app.get('/progress', (req, res) => {
       }
       else {
         var daterequestedbyuser = 1;
-        var getsumofdate = "SELECT sum(meals.cals), sum(meals.carbs), sum(meals.sodium), sum(meals.sugars), sum(meals.protein) FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
+        var getsumofdate = "SELECT sum(meals.cals) AS calories, sum(meals.carbs) AS carbohydrates, sum(meals.sodium) AS sodium, sum(meals.sugars) AS sugars, sum(meals.protein) AS protein FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
         db.any(getsumofdate,[req.session.user.username, daterequestedbyuser,])
          .then((data2) => {
-           res.render('pages/progress',[data2, data[0].bmr, daterequestedbyuser]);
+            console.log(data2);
+            var usersbmr = data[0].bmr;
+            console.log(usersbmr);
+            res.render('pages/progress',{data2, usersbmr, daterequestedbyuser, message: "If no pie charts are showing, please note that you have to enter in data in calendar"});
          })
          .catch((err) => {
            console.log(err);
@@ -194,10 +198,13 @@ app.get('/progress', (req, res) => {
       }
       else {
         var daterequestedbyuser = req.body.date;
-        var getsumofdate = "SELECT sum(meals.cals), sum(meals.carbs), sum(meals.sodium), sum(meals.sugars), sum(meals.protein) FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
+        var getsumofdate = "SELECT sum(meals.cals) AS calories, sum(meals.carbs) AS carbohydrates, sum(meals.sodium) AS sodium, sum(meals.sugars) AS sugars, sum(meals.protein) AS protein FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
         db.any(getsumofdate,[req.session.user.username, daterequestedbyuser,])
          .then((data2) => {
-           res.render('pages/progress',[data2, data[0].bmr, daterequestedbyuser]);
+            console.log(data2);
+            var usersbmr = data[0].bmr;
+            console.log(usersbmr);
+            res.render('pages/progress',{data2, usersbmr, daterequestedbyuser, message: "If no pie charts are showing, please note that you have to enter in data in calendar"});
          })
          .catch((err) => {
            console.log(err);
@@ -224,7 +231,7 @@ app.get('/progress', (req, res) => {
 
 
 
-    db.any(user_meals_on_calendar,[])
+    db.any(user_meals_on_calendar,[req.session.user.username])
     .then((userMeals) => {
       res.render("pages/calendar", {
         userMeals,
@@ -259,7 +266,7 @@ app.get('/progress', (req, res) => {
 
 
 
-      db.any(user_meals_on_calendar,[])
+      db.any(user_meals_on_calendar,[req.session.user.username])
       .then((userMeals) => {
         res.render("pages/calendar", {
           userMeals,
@@ -278,6 +285,10 @@ app.get('/progress', (req, res) => {
     }
     else if(req.body.identifier == "makemeal")
     {
+      db.any(mealsCountquery,[])
+      .then((data) => {
+        mealsCount = data[0].count;
+      });
       var time = req.body.time;
       var date = req.body.date;
       var meal = req.body.meal;
@@ -323,12 +334,12 @@ app.get('/progress', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/calendar");
+      res.redirect("/meals");
     });
   });
 
   app.get('/calculator', (req, res) => {
-    res.render('pages/calculator');
+    res.render('pages/calculator',{message:"Please enter this information to calculate your BMR"});
   });
 
   app.post('/calculator', (req, res) => {
@@ -353,7 +364,7 @@ app.get('/progress', (req, res) => {
     db.any(updatequery, [bmr, req.session.user.username])
     .then(function(data){
       console.log(bmr);
-      res.redirect("/calendar");
+      res.render("pages/calculator", {message:"Successfully added BMR. You may go to another page"});
     })
     .catch((err) => {
       console.log(err);

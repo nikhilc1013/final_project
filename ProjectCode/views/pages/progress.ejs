@@ -1,6 +1,12 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
-<html>
+<div class="col"><%- include ('../partials/message') %></div>
+<main>
+  <form class="col" action="/progress" method = "post" id = "modalform">
+    <label for="validationDefault03" class="form-label">Date # of December(ex. enter 10 for December 10)</label>
+    <input type="number" class="form-control" id="" name="date"value="Enter a name" style="display: inline-block;width: 500px; margin-top: auto; margin-bottom: auto; vertical-align: bottom;" required>
+    <button class="btn btn-primary" id="submit-button" type="submit" style="display: inline-block;margin-top: auto;margin-bottom: auto;">Submit form</button>
+</form>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src=
 "https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
@@ -103,37 +109,6 @@
 
   </style>
   <body>
-    <form class="col" action="/progress" method = "post" id = "modalform">
-      <input 
-        type="number" 
-        class="form-control" 
-        id="" 
-        name="date"
-        value="Enter a name" 
-        required 
-        placeholder="Date # of December(ex. enter 10 for December 10)" 
-        style="
-          display: inline-block;
-          width: 500px; 
-          margin-top: auto; 
-          margin-bottom: auto; 
-          vertical-align: bottom;
-        " 
-      >
-      <input type="hidden" id="postId" name="identifier" value="makemeal"/>
-      <button 
-        class="btn btn-primary" 
-        id="submit-button" 
-        type="submit" 
-        style="
-          display: inline-block;
-          margin-top: auto;
-          margin-bottom: auto;
-        "
-      >
-        Submit form
-      </button>
-    </form>
 
     <table id="pieCharts">
       <tr id="headings"></tr>
@@ -150,27 +125,20 @@
         // Pie charts
         var pieRow = document.getElementById("pies");
         var pie = pieRow.insertCell();
-        pie.innerHTML = 
-          `<span 
-            class="pie animate" 
-            style="
-              --p:40;
-              --c:rgb(0, 221, 246);
-              --b:10px;
-              margin-top:30px;
-              float: center;
-            "
-          > 
-            40% 
-          </span>`;
+        var percent = 0;
+        percent = (category=="Calories") ? <%- data2[0].calories %>/<%-usersbmr %> * 100: percent; 
+        percent = (category=="Carbohydrates") ? <%- data2[0].carbohydrates %>/300 * 100 : percent;
+        percent = (category=="Sodium") ? <%- data2[0].sodium %>/1500 * 100 : percent;
+        percent = (category=="Sugars") ? <%- data2[0].sugars %>/50 * 100 : percent;
+        percent = (category=="Protein") ? <%- data2[0].protein %>/50 * 100: percent;
+        pie.innerHTML = `<span class="pie animate" style=" --p:` + percent + `; --c:rgb(0, 221, 246); --b:10px; margin-top:30px;float: center;">` + parseInt(percent)+ `%</span>`;
         const pies = document.getElementById('pieCharts');
         pies.appendChild(pie);
       }
       const categories = ["Calories", "Carbohydrates", "Sodium", "Sugars", "Protein"];
       categories.forEach(loadPieCharts);
-      categores.forEach(loadPieHeadings);
 
     </script>
   </body>
-</html>
+</main>
 <%- include ('../partials/footer') %>
