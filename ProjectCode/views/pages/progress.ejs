@@ -9,46 +9,33 @@
 </form>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src=
-"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+  "https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
   <link
     rel="stylesheet"
     href=
-"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css"
+  "https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css"
   />
   <link
     rel=
-"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+  "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
     type="text/css"
   />
   
   <script src=
-"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+  "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
   </script>
   <script src=
-"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+  "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
   </script>
   
   <script src=
-"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
+  "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
   </script>
   
   <style>
     body {
       text-align: center;
       background:#ddd;
-    }
-    h1 {
-      text-align: center;
-      font-family: "Verdana", sans-serif;
-      font-size: 40px;
-      color:rgb(0, 90, 115);
-      display: inline;
-    }
-
-    @property --p{
-      syntax: '<number>';
-      inherits: true;
-      initial-value: 0;
     }
 
     .pie {
@@ -107,6 +94,20 @@
       padding: 5px;
     }
 
+    #pieCharts {
+      margin-top: 50px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .col{
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 25px;
+      display: inline-block;
+      padding: 5px;
+    }
+
   </style>
   <body>
 
@@ -121,6 +122,13 @@
         var headingsRow = document.getElementById("headings");
         var heading = headingsRow.insertCell();
         heading.innerHTML = `<h1 style="margin:30px;">` + category + `</h1>`;
+
+        form1.addEventListener('submit', (e) => {
+            e.preventDefault();
+            var cal = Number(document.getElementById('userInput1').value);
+
+            cal += Number(bar.getAttribute("aria-valuenow"));
+            bar.setAttribute("aria-valuenow", cal);
 
         // Pie charts
         var pieRow = document.getElementById("pies");
