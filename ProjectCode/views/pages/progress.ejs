@@ -122,14 +122,6 @@
         var headingsRow = document.getElementById("headings");
         var heading = headingsRow.insertCell();
         heading.innerHTML = `<h1 style="margin:30px;">` + category + `</h1>`;
-
-        form1.addEventListener('submit', (e) => {
-            e.preventDefault();
-            var cal = Number(document.getElementById('userInput1').value);
-
-            cal += Number(bar.getAttribute("aria-valuenow"));
-            bar.setAttribute("aria-valuenow", cal);
-
         // Pie charts
         var pieRow = document.getElementById("pies");
         var pie = pieRow.insertCell();
@@ -145,7 +137,6 @@
       }
       const categories = ["Calories", "Carbohydrates", "Sodium", "Sugars", "Protein"];
       categories.forEach(loadPieCharts);
-
     </script>
   </body>
 </main>
