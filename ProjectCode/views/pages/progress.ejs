@@ -38,6 +38,19 @@
       background:#ddd;
     }
 
+    h1 {
+      text-align: center;
+      font-family: "Verdana", sans-serif;
+      font-size: 40px;
+      color:rgb(0, 90, 115);
+      display: inline;
+    }
+    @property --p{
+      syntax: '<number>';
+      inherits: true;
+      initial-value: 0;
+    }
+
     .pie {
       --p:20;
       --b:22px;
@@ -78,20 +91,6 @@
     }
     @keyframes p {
       from{--p:0}
-    }
-
-    #pieCharts {
-      margin-top: 50px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .col{
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 25px;
-      display: inline-block;
-      padding: 5px;
     }
 
     #pieCharts {
