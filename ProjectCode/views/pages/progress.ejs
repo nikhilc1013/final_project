@@ -1,8 +1,41 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
-<style>
-    .space{
-        padding: 50px;
+<div class="col"><%- include ('../partials/message') %></div>
+<main>
+  <form class="col" action="/progress" method = "post" id = "modalform">
+    <label for="validationDefault03" class="form-label">Date # of December(ex. enter 10 for December 10)</label>
+    <input type="number" class="form-control" id="" name="date"value="Enter a name" style="display: inline-block;width: 500px; margin-top: auto; margin-bottom: auto; vertical-align: bottom;" required>
+    <button class="btn btn-primary" id="submit-button" type="submit" style="display: inline-block;margin-top: auto;margin-bottom: auto;">Submit form</button>
+</form>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+  <link
+    rel="stylesheet"
+    href=
+"https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css"
+  />
+  <link
+    rel=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+    type="text/css"
+  />
+  
+  <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+  </script>
+  <script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+  </script>
+  
+  <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js">
+  </script>
+  
+  <style>
+    body {
+      text-align: center;
+      background:#ddd;
     }
 </style>
 
@@ -21,13 +54,22 @@
             Your goal is 2000 calories.
     </div>
 
-    <form id="form">
-        <div class="form-group">
-            <label for="cal">Enter Calories</label>
-            <input type="number" class="form-control" id="userInput1" placeholder="Cals">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+    #pieCharts {
+      margin-top: 50px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .col{
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 25px;
+      display: inline-block;
+      padding: 5px;
+    }
+
+  </style>
+  <body>
 
     <form id="form2">
         <div class="form-group">
@@ -50,11 +92,21 @@
             cal += Number(bar.getAttribute("aria-valuenow"));
             bar.setAttribute("aria-valuenow", cal);
 
-            var percentage = Math.round((cal / goal)*100);
-            bar.style.width = percentage + "%"
-            bar.innerHTML = percentage + "%";
-            document.getElementById('progress').innerHTML = `You have met ${percentage}% of your goal.`;
-        });
+        // Pie charts
+        var pieRow = document.getElementById("pies");
+        var pie = pieRow.insertCell();
+        var percent = 0;
+        percent = (category=="Calories") ? <%- data2[0].calories %>/<%-usersbmr %> * 100: percent; 
+        percent = (category=="Carbohydrates") ? <%- data2[0].carbohydrates %>/300 * 100 : percent;
+        percent = (category=="Sodium") ? <%- data2[0].sodium %>/1500 * 100 : percent;
+        percent = (category=="Sugars") ? <%- data2[0].sugars %>/50 * 100 : percent;
+        percent = (category=="Protein") ? <%- data2[0].protein %>/50 * 100: percent;
+        pie.innerHTML = `<span class="pie animate" style=" --p:` + percent + `; --c:rgb(0, 221, 246); --b:10px; margin-top:30px;float: center;">` + parseInt(percent)+ `%</span>`;
+        const pies = document.getElementById('pieCharts');
+        pies.appendChild(pie);
+      }
+      const categories = ["Calories", "Carbohydrates", "Sodium", "Sugars", "Protein"];
+      categories.forEach(loadPieCharts);
 
         form2.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -63,7 +115,6 @@
             goal = goalInput;
         });
     </script>
-
+  </body>
 </main>
-
 <%- include ('../partials/footer') %>
