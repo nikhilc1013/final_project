@@ -1,12 +1,16 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
-<div class="col"><%- include ('../partials/message') %></div>
+<style>
+  main{
+    background-color: #282A3A;
+  }
+</style>
 <main>
   <div class = "container event-container">
     <div class = "container">
     <form class="col" action="/calendar" method = "post">
       <div class="col-md-3">
-        <label for="validationDefault04" class="form-label">Change to See Different Week</label>
+        <label for="validationDefault04" style="color: white;" class="form-label">Change to See Different Week</label>
         <select class="form-select" name="week">
             <option value="default">Choose an option</a>
             <option value="0">November 27 - December 3</a>
@@ -18,13 +22,13 @@
       </div>
       <input type="hidden" id="postId" name="identifier" value="changeweek" />
       <div class="col-12">
-          <button class="btn btn-primary" id="submit-button" type="submit">Change</button>
+          <button class="btn btn-primary" id="submit-button" type="submit" style = "background-color: #C69749; border-color: #C69749;">Change</button>
       </div>
     </form>
     </div>
 
     <div style="text-align:center;" class = "container">
-      <button style="width:65%;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#something">
+      <button style= "width:55%; background-color: #C69749; border-color: #C69749;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#something">
         <p style="font-size:110%;">Add Meal to Calendar</p>
       </button>
     </div>
@@ -77,19 +81,19 @@
       var weektosee = locals.week;
         if(weektosee == 0)
         {
-          all35cardsfordec += '<div class="row"><div class="col"><div style="min-height:1000px;" class="card"><div id="November27" class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
-          all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
-          all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
-          all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+          all35cardsfordec += '<div class="row"><div class="col"><div style="min-height:1000px;" class="card card text-white bg-dark"><div id="November27" class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+          all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card card text-white bg-dark"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+          all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card card text-white bg-dark"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
+          all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card card text-white bg-dark"><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div></div></div>';
           for(var i = 1; i < 4; i++)
           {
-            all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text">December ' + i.toString() + '</p>';
+            all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card card text-white bg-dark"><div class="card-body"><h5 class="card-title"></h5><p class="card-text">December ' + i.toString() + '</p>';
             if(meals)
             {
               meals.forEach(function(item){ 
                 if(item.dayofmonth == i)
                 {
-                  all35cardsfordec += '<div class="col-sm-12"><div class="card"><div class="card-body"><p class="card-text">ID: ' + item.id + '</p>' + '<p class="card-text">Time of Meal: ' + item.timeofmeal + '</p>' + '<p class="card-text">Meal Name: ' + item.meal + '</p></div></div></div>';
+                  all35cardsfordec += '<div class="col-sm-12"><div class="card" style = "background-color:#1d202e; border-color:bisque; border-width:5px; padding-top:10px;"><div class="card-body"><p class="card-text">ID: ' + item.id + '</p>' + '<p class="card-text">Time of Meal: ' + item.timeofmeal + '</p>' + '<p class="card-text">Meal Name: ' + item.meal + '</p></div></div></div>';
                 }
               });
             }
@@ -102,13 +106,13 @@
           all35cardsfordec += '<div class="row">';
           for(var i = weektosee * 7 -3; i < (weektosee * 7 + 4); i++)
           {
-            all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card"><div class="card-body"><h5 class="card-title"></h5><p class="card-text">December ' + i.toString() + '</p>';
+            all35cardsfordec += '<div class="col"><div style="min-height:1000px;" class="card card text-white bg-dark"><div class="card-body"><h5 class="card-title"></h5><p class="card-text">December ' + i.toString() + '</p>';
             if(meals)
             {
               meals.forEach(function(item){ 
                 if(item.dayofmonth == i)
                 {
-                  all35cardsfordec += '<div class="col-sm-12"><div class="card"><div class="card-body"><p class="card-text">ID: ' + item.id + '</p>' + '<p class="card-text">Time of Meal: ' + item.timeofmeal + '</p>' + '<p class="card-text">Meal Name: ' + item.meal + '</p></div></div></div>';
+                  all35cardsfordec += '<div class="col-sm-12"><div class="card" style = "background-color:#1d202e; border-color:bisque; border-width:5px; padding-top:10px;"><div class="card-body"><p class="card-text">ID: ' + item.id + '</p>' + '<p class="card-text">Time of Meal: ' + item.timeofmeal + '</p>' + '<p class="card-text">Meal Name: ' + item.meal + '</p></div></div></div>';
                 }
               });
             }
