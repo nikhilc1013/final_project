@@ -1,11 +1,16 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
 <div class="col"><%- include ('../partials/message') %></div>
+<style>
+  main{
+    background-color: #282A3A;
+  }
+</style>
 <main>
       <div class = "container event-container">
     
         <div style="text-align:center;" class = "container">
-          <button style="width:65%;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+          <button style="width:65%; background-color: #C69749; border-color:#C69749;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
             <p style="font-size:110%;">Add Meal to Meal Database</p>
           </button>
         </div>
@@ -59,15 +64,15 @@
           }
         </style>
         <thead>
-          <tr><th>Name</th><th>Calories</th><th>Carbohydrates</th><th>Sodium</th><th>Sugars</th><th>Protein</th></tr>
+          <tr><th style="color: white;">Name</th><th style="color: white;">Calories</th><th style="color: white;">Carbohydrates</th><th style="color: white;">Sodium</th><th style="color: white;">Sugars</th><th style="color: white;">Protein</th></tr>
         </thead>
         <tbody>
-          <% 
+          <%
           var mealslist = meals;
           var entry = "";
           if (mealslist) { 
             mealslist.forEach(function(item){ 
-              entry += '<tr><td>' + item.name + '</td>' + '<td>' + item.cals + '</td>' + '<td>' + item.carbs + '</td>' + '<td>' + item.sodium + '</td>' + '<td>' + item.sugars + '</td>' + '<td>' + item.protein + '</td></tr>';
+              entry += '<tr><td style = "color: white">' + item.name + '</td>' + '<td style = "color: white">' + item.cals + '</td>' + '<td style = "color: white">' + item.carbs + '</td>' + '<td style = "color: white">' + item.sodium + '</td>' + '<td style = "color: white">' + item.sugars + '</td>' + '<td style = "color: white">' + item.protein + '</td></tr>';
             }); 
             }%> 
            <%- entry %> 

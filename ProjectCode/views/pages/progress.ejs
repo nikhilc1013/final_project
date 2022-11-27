@@ -1,11 +1,16 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
 <div class="col"><%- include ('../partials/message') %></div>
+<style>
+  main{
+    background-color: #282A3A;
+  }
+</style>
 <main>
   <form class="col" action="/progress" method = "post" id = "modalform">
-    <label for="validationDefault03" class="form-label">Date # of December(ex. enter 10 for December 10)</label>
+    <label for="validationDefault03" class="form-label text-white">Date # of December(ex. enter 10 for December 10)</label>
     <input type="number" class="form-control" id="" name="date"value="Enter a name" style="display: inline-block;width: 500px; margin-top: auto; margin-bottom: auto; vertical-align: bottom;" required>
-    <button class="btn btn-primary" id="submit-button" type="submit" style="display: inline-block;margin-top: auto;margin-bottom: auto;">Submit form</button>
+    <button class="btn btn-primary" id="submit-button" type="submit" style="display: inline-block;margin-top: auto;margin-bottom: auto; background-color: #C69749; border-color: #C69749;">Submit form</button>
 </form>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src=
