@@ -1,5 +1,6 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
+
 <html>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src=
@@ -29,50 +30,104 @@
   <style>
     body {
       text-align: center;
-      color: green;
+      background:#ddd;
     }
-    h2 {
+
+    h1 {
       text-align: center;
       font-family: "Verdana", sans-serif;
       font-size: 40px;
+      color:rgb(0, 90, 115);
+      display: inline;
     }
+    @property --p{
+      syntax: '<number>';
+      inherits: true;
+      initial-value: 0;
+    }
+
+    .pie {
+      --p:20;
+      --b:22px;
+      --c:darkred;
+      --w:150px;
+      
+      width:var(--w);
+      aspect-ratio:1;
+      position:relative;
+      display:inline-grid;
+      margin:5px;
+      place-content:center;
+      font-size:25px;
+      font-weight:bold;
+      font-family:sans-serif;
+      color: rgb(0, 0, 0);
+    }
+    .pie:before, .pie:after {
+      content:"";
+      position:absolute;
+      border-radius:50%;
+    }
+    .pie:before {
+      inset:0;
+      background:
+        radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+        conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+      -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+              mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+    }
+    .pie:after {
+      inset:calc(50% - var(--b)/2);
+      background:var(--c);
+      transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+    }
+    .animate {
+      animation:p 1s .5s both;
+    }
+    @keyframes p {
+      from{--p:0}
+    }
+
+    #pieCharts {
+      margin-top: 50px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .col{
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 25px;
+      display: inline-block;
+      padding: 5px;
+    }
+
   </style>
   <body>
-    <h1>Calories</h1>
-    <div id="Calories"></div>
-    <h1>Carbohydrates</h1>
-    <div id="Carbohydrates"></div>
-    <h1>Sodium</h1>
-    <div id="Sodium"></div>
-    <h1>Sugars</h1>
-    <div id="Sugars"></div>
-    <h1>Protein</h1>
-    <div id="Protein"></div>
+
+    <table id="pieCharts">
+      <tr id="headings"></tr>
+      <tr id="pies"></tr>
+    </table>
   
     <script>
       function loadPieCharts(category){
-        var chart = bb.generate({
-          data: {
-            columns: [
-              [category, 2],
-              ["test", 4],
-            ],
-            type: "donut",
-            onclick: function (d, i) {
-              console.log("onclick", d, i);
-            },
-            onover: function (d, i) {
-              console.log("onover", d, i);
-            },
-            onout: function (d, i) {
-              console.log("onout", d, i);
-            },
-          },
-          donut: {
-            title: "70",
-          },
-          bindto: "#" + category,
-        });
+        // headings
+        var headingsRow = document.getElementById("headings");
+        var heading = headingsRow.insertCell();
+        heading.innerHTML = `<h1 style="margin:30px;">` + category + `</h1>`;
+        // Pie charts
+        var pieRow = document.getElementById("pies");
+        var pie = pieRow.insertCell();
+        var percent = 0;
+        percent = (category=="Calories") ? <%- data2[0].calories %>/<%-usersbmr %> * 100: percent; 
+        percent = (category=="Carbohydrates") ? <%- data2[0].carbohydrates %>/300 * 100 : percent;
+        percent = (category=="Sodium") ? <%- data2[0].sodium %>/1500 * 100 : percent;
+        percent = (category=="Sugars") ? <%- data2[0].sugars %>/50 * 100 : percent;
+        percent = (category=="Protein") ? <%- data2[0].protein %>/50 * 100: percent;
+        pie.innerHTML = `<span class="pie animate" style=" --p:` + percent + `; --c:rgb(0, 221, 246); --b:10px; margin-top:30px;float: center;">` + parseInt(percent)+ `%</span>`;
+        const pies = document.getElementById('pieCharts');
+        pies.appendChild(pie);
       }
       const categories = ["Calories", "Carbohydrates", "Sodium", "Sugars", "Protein"];
       categories.forEach(loadPieCharts);

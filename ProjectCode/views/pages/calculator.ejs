@@ -1,31 +1,30 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
-<<<<<<< Updated upstream
 
 =======
 <div class="col"><%- include ('../partials/message') %></div>
 <style type="text/css">
   body { background: #282A3A !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
 </style>
->>>>>>> Stashed changes
+
 <main>
     <div class = "container event-container">
         <form class="col" action="/calculator" method = "post" id = "modalform">
             
             <div class="col-md-4">
-                <label for="validationDefault03" class="form-label">Weight (kg)</label>
+                <label for="validationDefault03" class="form-label text-white">Weight (kg)</label>
                 <input type="number" class="form-control" id=""name="weight" value=""required>
             </div>
             <div class="col-md-3">
-                <label for="validationDefault04" class="form-label">Height (cm)</label>
+                <label for="validationDefault04" class="form-label text-white">Height (cm)</label>
                 <input type="number" class="form-control" id="" name="height" value=""required>
             </div>
             <div class="col-md-3">
-              <label for="validationDefault04" class="form-label">Age</label>
+              <label for="validationDefault04" class="form-label text-white">Age</label>
               <input type="number" class="form-control" id="" name="age"value=""required>
           </div>
           <div class="col-md-3">
-            <label for="validationDefault04" class="form-label">Sex</label>
+            <label for="validationDefault04" class="form-label text-white">Sex</label>
             <select class="form-select" name="gender">
                 <option value="default">Choose an option</a>
                 <option value="male">Male</a>
@@ -33,7 +32,7 @@
                 <option value="other">Other</a>
             </select>
           <div class="col-12">
-              <button class="btn btn-primary" id="submit-button" type="submit">Submit form</button>
+              <button class="btn btn-primary" id="submit-button" type="submit" style="background-color: #C69749; border-color: #C69749;">Submit form</button>
           </div>
         </form>
       </div>
