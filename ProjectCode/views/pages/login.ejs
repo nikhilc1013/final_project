@@ -1,28 +1,27 @@
 <%- include ('../partials/header') %> <%- include ('../partials/menu') %> 
 <div class="col"><%- include ('../partials/message') %></div>
-<main>
-  <div class="container" style="width: 50%;">
-    <h1 style="padding-top: 20px; padding-bottom: 10px;">Login</h1>
 <style type="text/css">
-  body { background: #282A3A !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+  body{
+    background: #282A3A;
+  }
 </style>
 <main>
   <div class="container" style="width: 50%;">
     <h1 style="padding-top: 20px; padding-bottom: 10px; color:white;">Login</h1>
     <form action="/login" method="POST">
         <div class="border-bottom" style="padding-bottom: 20px;">
-            <div class="form-group" style="color: white;">
+            <div class="form-group" style="color:white;">
                 <label for="username">User Name</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Enter User Name">
             </div>
-            <div class="form-group" style="color: white;">
-                <label for="password" >Password</label>
+            <div class="form-group" style="color:white;">
+                <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
             </div>
         </div>
         <p style="padding-top: 10px; display: inline-block; color:white;">Don't have an account?</p>
         <a style="display: inline-block" href="/register">Register</a>
-        <button type="submit" class="btn btn-primary" style="display: inline-block; margin-left: 386px;">Log in</button>
+        <button type="submit" class="btn btn-primary" style="display: inline-block; margin-left: 376px;">Log in</button>
     </form>
   </div>
 </main>
