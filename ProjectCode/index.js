@@ -4,7 +4,6 @@ const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-// const axios = require('axios');
 
 // database configuration
 const dbConfig = {
@@ -60,9 +59,10 @@ console.log('Server is listening on port 3000');
 
 const all_meals = `SELECT * FROM meals ORDER BY meals.name ASC;`;
 
-const user_meals_on_calendar = `SELECT calendars.dayofmonth, calendars.id, calendars.timeofmeal, calendars.meal FROM calendars ORDER BY calendars.timeofmeal ASC;`;
+const user_meals_on_calendar = `SELECT calendars.dayofmonth, calendars.id, calendars.timeofmeal, calendars.meal FROM calendars WHERE username=$1 ORDER BY calendars.timeofmeal ASC;`;
 
 var mealsCount = 0;
+var mealsCountquery = 'SELECT COUNT(calendars.id) AS count FROM calendars;'
 
 app.get('/', (req, res) =>{
   if(req.session.user) res.redirect('/home');
@@ -85,10 +85,11 @@ app.get('/', (req, res) =>{
     var username = req.body.username;
     const hash = await bcrypt.hash(req.body.password, 10);
 
-    const query ='insert into users (username,password) values ($1,$2) returning *';
+    const query ='insert into users (username,password, bmr) values ($1,$2, $3) returning *';
   db.any(query, [
     username,
     hash,
+    0,
   ])
   .then(function (data) {
     res.redirect('/login');
@@ -99,38 +100,38 @@ app.get('/', (req, res) =>{
 });
 
 
-  app.get('/login', (req, res) => {
-    if(req.session.user) res.redirect('/home');
-    else res.render('pages/login');
+app.get('/login', (req, res) => {
+  if(req.session.user) res.redirect('/home');
+  else res.render('pages/login');
+});
+
+
+app.post('/login', (req, res) => {
+  //the logic goes here
+  const query ='select password from users where username=$1';
+  // const match = await bcrypt.compare(req.body.password, user.password); //await is explained in #8
+  db.one(query, [req.body.username])
+  .then(async (data) => {
+    const match = await bcrypt.compare(req.body.password, data.password); 
+    if(match)
+      {
+          req.session.user = {
+            api_key: "something",
+            username: req.body.username,
+          };
+          req.session.save();
+          res.redirect("/home");
+      }
+      else
+      {
+          res.render("pages/login", {message:"Wrong username or password"});
+          // add message statement
+        }
+  })
+  .catch((err) => {
+    console.log(err);
+    res.redirect("/register");
   });
-
-
-  app.post('/login', (req, res) => {
-    //the logic goes here
-    const query ='select password from users where username=$1';
-    // const match = await bcrypt.compare(req.body.password, user.password); //await is explained in #8
-    db.one(query, [req.body.username])
-    .then(async (data) => {
-      const match = await bcrypt.compare(req.body.password, data.password); 
-      if(match)
-        {
-            req.session.user = {
-              api_key: "something",
-              username: req.body.username,
-            };
-            req.session.save();
-            res.redirect("/home");
-        }
-        else
-        {
-            res.render("pages/login", {message:"Wrong username or password"});
-            // add message statement
-        }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect("/register");
-    });
 
 });
 
@@ -154,9 +155,67 @@ const auth = (req, res, next) => {
 
 
 app.get('/progress', (req, res) => {
-    res.render('pages/progress');
+  var userbmr;  
+  var getbmr = "select bmr from users where users.username = $1";
+    db.any(getbmr,[req.session.user.username])
+    .then((data) => {
+      console.log("Inside then", data[0].bmr, data[0]);
+      if (data[0].bmr == 0){
+        res.redirect('/calculator');
+      }
+      else {
+        var daterequestedbyuser = 1;
+        var getsumofdate = "SELECT sum(meals.cals) AS calories, sum(meals.carbs) AS carbohydrates, sum(meals.sodium) AS sodium, sum(meals.sugars) AS sugars, sum(meals.protein) AS protein FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
+        db.any(getsumofdate,[req.session.user.username, daterequestedbyuser,])
+         .then((data2) => {
+            console.log(data2);
+            var usersbmr = data[0].bmr;
+            console.log(usersbmr);
+            res.render('pages/progress',{data2, usersbmr, daterequestedbyuser, message: "If no pie charts are showing, please note that you have to enter in data in calendar"});
+         })
+         .catch((err) => {
+           console.log(err);
+           res.redirect('/calendar');
+         });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      userbmr = 0;
+    });
   });
 
+  
+  app.post('/progress', (req, res) => {
+    var userbmr;  
+  var getbmr = "select bmr from users where users.username = $1";
+    db.any(getbmr,[req.session.user.username])
+    .then((data) => {
+      console.log("Inside then", data[0].bmr, data[0]);
+      if (data[0].bmr == 0){
+        res.redirect('/calculator');
+      }
+      else {
+        var daterequestedbyuser = req.body.date;
+        var getsumofdate = "SELECT sum(meals.cals) AS calories, sum(meals.carbs) AS carbohydrates, sum(meals.sodium) AS sodium, sum(meals.sugars) AS sugars, sum(meals.protein) AS protein FROM calendars INNER JOIN meals ON calendars.meal = meals.name WHERE calendars.username = $1 AND calendars.dayofmonth = $2;"; 
+        db.any(getsumofdate,[req.session.user.username, daterequestedbyuser,])
+         .then((data2) => {
+            console.log(data2);
+            var usersbmr = data[0].bmr;
+            console.log(usersbmr);
+            res.render('pages/progress',{data2, usersbmr, daterequestedbyuser, message: "If no pie charts are showing, please note that you have to enter in data in calendar"});
+         })
+         .catch((err) => {
+           console.log(err);
+           res.redirect('/calendar');
+         });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      userbmr = 0;
+    });
+  });
 
   app.get('/calendar', (req, res) => {
     var mealss;
@@ -171,7 +230,7 @@ app.get('/progress', (req, res) => {
 
 
 
-    db.any(user_meals_on_calendar,[])
+    db.any(user_meals_on_calendar,[req.session.user.username])
     .then((userMeals) => {
       res.render("pages/calendar", {
         userMeals,
@@ -190,35 +249,59 @@ app.get('/progress', (req, res) => {
   });
 
   app.post('/calendar', (req, res) => {
-    var week = parseInt(req.body.week);
-    var mealss;
-    db.any(all_meals,[])
-    .then((mealsList) => {
-      mealss = mealsList;
-    })
-    .catch((err) => {
-      console.log(err);
-        mealss = [];
-    });
-
-
-
-    db.any(user_meals_on_calendar,[])
-    .then((userMeals) => {
-      res.render("pages/calendar", {
-        userMeals,
-        week,
-        mealsList:mealss,
+    console.log(req.body.identifier);
+    if(req.body.identifier == "changeweek")
+    {
+      var week = parseInt(req.body.week);
+      var mealss;
+      db.any(all_meals,[])
+      .then((mealsList) => {
+        mealss = mealsList;
+      })
+      .catch((err) => {
+        console.log(err);
+          mealss = [];
       });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.render("pages/calendar", {
-        userMeals: [],
-        mealsList: [],
-        week,
+
+
+
+      db.any(user_meals_on_calendar,[req.session.user.username])
+      .then((userMeals) => {
+        res.render("pages/calendar", {
+          userMeals,
+          week,
+          mealsList:mealss,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.render("pages/calendar", {
+          userMeals: [],
+          mealsList: [],
+          week,
+        });
       });
-    });
+    }
+    else if(req.body.identifier == "makemeal")
+    {
+      db.any(mealsCountquery,[])
+      .then((data) => {
+        mealsCount = data[0].count;
+      });
+      var time = req.body.time;
+      var date = req.body.date;
+      var meal = req.body.meal;
+      const query = 'insert into calendars (id, dayofmonth, timeofmeal, meal, username) values ($1, $2, $3, $4, $5) returning *'
+      db.any(query, [mealsCount,date, time, meal, req.session.user.username])
+      .then(function(data) {
+        mealsCount++;
+        res.redirect('/calendar');
+      })
+      .catch((err) => {
+        console.log(err);
+        res.redirect('/calendar');
+      });
+    }
   });
 
   app.get('/meals', (req, res) => {
@@ -250,28 +333,12 @@ app.get('/progress', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/calendar");
-    });
-  });
-
-  app.post('/calendarmeals', (req, res) => {
-    var time = req.body.time;
-    var date = req.body.date;
-    var meal = req.body.meal;
-    const query = 'insert into calendars (id, dayofmonth, timeofmeal, meal, username) values ($1, $2, $3, $4, $5) returning *'
-    db.any(query, [mealsCount,date, time, meal, req.session.user.username])
-    .then(function(data) {
-      mealsCount++;
-      res.redirect('/calendar');
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect('/calendar');
+      res.redirect("/meals");
     });
   });
 
   app.get('/calculator', (req, res) => {
-    res.render('pages/calculator');
+    res.render('pages/calculator',{message:"Please enter this information to calculate your BMR"});
   });
 
   app.post('/calculator', (req, res) => {
@@ -289,13 +356,14 @@ app.get('/progress', (req, res) => {
       bmr = 66+(13.7*weight)+(5*height)-(6.8*age);
     }
     else if(gender == 'other'){
-      bmr = 66+(13.7*weight)+(5*height)-(6.8*age);;
+      bmr = 66+(13.7*weight)+(5*height)-(6.8*age);
     }
 
-    const updatequery = "UPDATE users SET bmr=$1 WHERE user=$2";
+    const updatequery = "UPDATE users SET bmr=$1 WHERE username=$2;";
     db.any(updatequery, [bmr, req.session.user.username])
     .then(function(data){
-      res.redirect("/calendar");
+      console.log(bmr);
+      res.render("pages/calculator", {message:"Successfully added BMR. You may go to another page"});
     })
     .catch((err) => {
       console.log(err);
