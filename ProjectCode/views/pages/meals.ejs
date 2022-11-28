@@ -5,12 +5,6 @@
   body { background: #282A3A !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
 </style>
 <main>
-  <div class = "container event-container">
-      <form class="col" action="/calculator" method = "post" id = "modalform">
-          
-          <div class="col-md-4">
-              <label for="validationDefault03" class="form-label text-white">Weight (kg)</label>
-              <input type="number" class="form-control" id=""name="weight" value=""required>
       <div class = "container event-container">
     
         <div style="text-align:center;" class = "container">
@@ -56,26 +50,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3">
-              <label for="validationDefault04" class="form-label text-white">Height (cm)</label>
-              <input type="number" class="form-control" id="" name="height" value=""required>
-          </div>
-          <div class="col-md-3">
-            <label for="validationDefault04" class="form-label text-white">Age</label>
-            <input type="number" class="form-control" id="" name="age"value=""required>
         </div>
-        <div class="col-md-3">
-          <label for="validationDefault04" class="form-label text-white">Sex</label>
-          <select class="form-select" name="gender">
-              <option value="default">Choose an option</a>
-              <option value="male">Male</a>
-              <option value="female">Female</a>
-              <option value="other">Other</a>
-          </select>
-        <div class="col-12">
-            <button class="btn btn-primary" id="submit-button" type="submit" style="background-color: #C69749; border-color: #C69749;">Submit form</button>
-        </div>
-      </form>
     </div>
     <div style="text-align:right;" class = "container event-container">
     <table class="table table-striped">
@@ -103,8 +78,5 @@
       </table>
     </div>
 </main>
-
-
-<%- include ('../partials/footer') %>
 
 <%- include ('../partials/footer') %>
