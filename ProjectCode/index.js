@@ -4,7 +4,6 @@ const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-// const axios = require('axios');
 
 // database configuration
 const dbConfig = {
@@ -101,38 +100,38 @@ app.get('/', (req, res) =>{
 });
 
 
-  app.get('/login', (req, res) => {
-    if(req.session.user) res.redirect('/home');
-    else res.render('pages/login');
+app.get('/login', (req, res) => {
+  if(req.session.user) res.redirect('/home');
+  else res.render('pages/login');
+});
+
+
+app.post('/login', (req, res) => {
+  //the logic goes here
+  const query ='select password from users where username=$1';
+  // const match = await bcrypt.compare(req.body.password, user.password); //await is explained in #8
+  db.one(query, [req.body.username])
+  .then(async (data) => {
+    const match = await bcrypt.compare(req.body.password, data.password); 
+    if(match)
+      {
+          req.session.user = {
+            api_key: "something",
+            username: req.body.username,
+          };
+          req.session.save();
+          res.redirect("/home");
+      }
+      else
+      {
+          res.render("pages/login", {message:"Wrong username or password"});
+          // add message statement
+        }
+  })
+  .catch((err) => {
+    console.log(err);
+    res.redirect("/register");
   });
-
-
-  app.post('/login', (req, res) => {
-    //the logic goes here
-    const query ='select password from users where username=$1';
-    // const match = await bcrypt.compare(req.body.password, user.password); //await is explained in #8
-    db.one(query, [req.body.username])
-    .then(async (data) => {
-      const match = await bcrypt.compare(req.body.password, data.password); 
-      if(match)
-        {
-            req.session.user = {
-              api_key: "something",
-              username: req.body.username,
-            };
-            req.session.save();
-            res.redirect("/home");
-        }
-        else
-        {
-            res.render("pages/login", {message:"Wrong username or password"});
-            // add message statement
-        }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect("/register");
-    });
 
 });
 
