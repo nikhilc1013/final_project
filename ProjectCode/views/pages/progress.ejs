@@ -1,7 +1,16 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
-
-<html>
+<!-- <style>
+  main{
+    background-color: #282A3A;
+  }
+</style> -->
+<main>
+  <form class="col" action="/progress" method = "post" id = "modalform">
+    <label for="validationDefault03" class="form-label text-white">Date # of December(ex. enter 10 for December 10)</label>
+    <input type="number" class="form-control" id="" name="date"value="Enter a name" style="display: inline-block;width: 500px; margin-top: auto; margin-bottom: auto; vertical-align: bottom;" required>
+    <button class="btn btn-primary" id="submit-button" type="submit" style="display: inline-block;margin-top: auto;margin-bottom: auto; background-color: #C69749; border-color: #C69749;">Submit form</button>
+</form>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src=
 "https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
@@ -31,6 +40,7 @@
     body {
       text-align: center;
       background:#ddd;
+      background-color: #282A3A;
     }
 
     h1 {
@@ -106,32 +116,28 @@
   <body>
 
     <table id="pieCharts">
-      <tr id="headings"></tr>
-      <tr id="pies"></tr>
+      <%
+          var caloriespercent = parseInt(data2[0].calories/usersbmr * 100);
+          var carbspercent = parseInt(data2[0].carbohydrates/300 * 100);
+          var sodiumpercent = parseInt(data2[0].sodium/1500 * 100);
+          var sugarspercent = parseInt(data2[0].sugars/50 * 100);
+          var proteinpercent = parseInt(data2[0].protein/50 * 100);
+      %> 
+      <tr id="headings">
+        <th><h1 style="margin:30px;">Calories</h1></th>
+        <th><h1 style="margin:30px;">Carbohydrates</h1></th>
+        <th><h1 style="margin:30px;">Sodium</h1></th>
+        <th><h1 style="margin:30px;">Sugars</h1></th>
+        <th><h1 style="margin:30px;">Protein</h1></th>
+      </tr>
+      <tr id="pies">
+        <th><span class="pie animate" style=" --p:<%- caloriespercent %>; --c:rgb(198,151,73); --b:10px; margin-top:30px;float: center;"><%- caloriespercent%>%</span></th>
+        <th><span class="pie animate" style=" --p:<%- carbspercent %>; --c:rgb(198,151,73); --b:10px; margin-top:30px;float: center;"><%- carbspercent %>%</span></th>
+        <th><span class="pie animate" style=" --p:<%- sodiumpercent %>; --c:rgb(198,151,73); --b:10px; margin-top:30px;float: center;"><%- sodiumpercent %>%</span></th>
+        <th><span class="pie animate" style=" --p:<%- sugarspercent %>; --c:rgb(198,151,73); --b:10px; margin-top:30px;float: center;"><%- sugarspercent %>%</span></th>
+        <th><span class="pie animate" style=" --p:<%- proteinpercent %>; --c:rgb(198,151,73); --b:10px; margin-top:30px;float: center;"><%- proteinpercent %>%</span></th>
+      </tr>
     </table>
-  
-    <script>
-      function loadPieCharts(category){
-        // headings
-        var headingsRow = document.getElementById("headings");
-        var heading = headingsRow.insertCell();
-        heading.innerHTML = `<h1 style="margin:30px;">` + category + `</h1>`;
-        // Pie charts
-        var pieRow = document.getElementById("pies");
-        var pie = pieRow.insertCell();
-        var percent = 0;
-        percent = (category=="Calories") ? <%- data2[0].calories %>/<%-usersbmr %> * 100: percent; 
-        percent = (category=="Carbohydrates") ? <%- data2[0].carbohydrates %>/300 * 100 : percent;
-        percent = (category=="Sodium") ? <%- data2[0].sodium %>/1500 * 100 : percent;
-        percent = (category=="Sugars") ? <%- data2[0].sugars %>/50 * 100 : percent;
-        percent = (category=="Protein") ? <%- data2[0].protein %>/50 * 100: percent;
-        pie.innerHTML = `<span class="pie animate" style=" --p:` + percent + `; --c:rgb(0, 221, 246); --b:10px; margin-top:30px;float: center;">` + parseInt(percent)+ `%</span>`;
-        const pies = document.getElementById('pieCharts');
-        pies.appendChild(pie);
-      }
-      const categories = ["Calories", "Carbohydrates", "Sodium", "Sugars", "Protein"];
-      categories.forEach(loadPieCharts);
-    </script>
   </body>
 </html>
 <%- include ('../partials/footer') %>

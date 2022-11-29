@@ -1,12 +1,13 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
 
-=======
 <div class="col"><%- include ('../partials/message') %></div>
-<style type="text/css">
-  body { background: #282A3A !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
-</style>
-
+<style>
+    body{
+      background-color: #282A3A;
+    }
+  </style>
+<body>
 <main>
     <div class = "container event-container">
         <form class="col" action="/calculator" method = "post" id = "modalform">
@@ -39,3 +40,4 @@
 </main>
 
 <%- include ('../partials/footer') %>
+</body>
