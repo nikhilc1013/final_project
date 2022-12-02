@@ -1,4 +1,4 @@
-Three Features:
+5 Features:
 
 Feature 1: Login/Register
 Test Cases/Data and Test Data: 
@@ -57,20 +57,22 @@ Feature 2: Calendar(Adding Meals)
 		-Test adding meals to calendar and logging off and relogging back on the check if data is still there
 			- Add any meals to the calendar and make sure it saves. Then logout and log back in
 		-Should save the user’s personal calendar and personal data
+Feature 4: Progress Page
 	-Test getting nutrition information for different foods
-		-Test adding up calories for more than one meal
+		-Test adding up calories for one meal
 			-Try adding multiple meals and verifying calculations are correct
-				-Fries 100 calories, Coke 200 calories
-			-Should return calories in text to the user
+				-Fries 100 calories on friday Dec 1
 			-Compare with suggested calorie intake
-		-Total calories over week
+			- Test if the carbs, other nutritional info are giving correct info
+		-Total calories over 1 day
+			-Fries 100 calories, Coke 200 calories
 			-Try adding multiple meals and verifying calculations are correct
-				-Monday: Fries 100 calories,  Wednesday: Coke 200 calories = Total = 300 calories this week 
-			-Should have a box (little pop up) on the side of the calendar that updates according to total calories over the week
+				-Monday 11am: Fries 100 calories,  Monday 11pm: Coke 200 calories = Total = 300 calories this per day 
+			- Test if the carbs, other nutritional info are giving correct info
 
 Test Environment: Local Machine/Docker
 
-Feature 3: BMI Calculator/Calories Needed
+Feature 4: BMI Calculator/Calories Needed
 Test Cases/Data and Test Results:
 	-Enter random inputs and see if calculations are correct 
 		-Use decimals as inputs
@@ -87,5 +89,13 @@ Test Cases/Data and Test Results:
 		-Track based on by changing meals and changing personal info(like weight or height)
 		-Should return the correct calculations
 	-Create calculator right based on credible calculator online for right calculations
+
+
+Feature 5: Meals Database
+Test Cases/Data and Test Results:
+	- Try leaving any one of the fields is empty and make sure the validation is working correctly
+		- It won't submit without entering all the information
+	- Add 1 meal: Pizza 100 cal, 50 carb, 10 protein, 10 rest and make sure it is showing up properly in calendar options and meals page
+	- Add multiple meals: Pizza from above, and pizza1 with same nutrtional info and make sure it is showing up properly in calendar options and meals page
 
 Test Environment: Local Machine/ Docker
