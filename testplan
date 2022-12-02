@@ -1,49 +1,6 @@
-5 Features:
+4 Features:
 
-Feature 1: Login/Register
-Test Cases/Data and Test Data: 
--For register page:
-	-Test with empty username/password “”
-		-Should give error
-	-Test with normal characters
-		-Username and password: Normal
-		-Should be properly created on database
-	-Test with special characters
-		-Username and password: Normal&31^%^@
-		-Should be properly created on database
-	-Test if proper username and password are added, then if it will redirect to the proper page and create the credentials on the database. Make sure values are encrypted on table
-		-Username: This
-		-Password: This
-		-Should redirect to login page with the credentials on the database
-	-Test with username that already exists
-		-Username: This
-		-Password: Anything
-		-Should give error saying this username already exists
--For Login page:
-	-Test with username that exists, but wrong password
-		-Username: This
-		-Password: Wrong
-		-Should give message saying wrong username or password
-	-Test with empty username/password “”
-		-Should give message saying wrong username or password
-	-Test with username and password that doesn’t exist 
-		-Username: Notexist
-		-Password: Notexist
-		-Should give message saying wrong username or password
-	-Test with password that exists, but wrong username
-		-Username: Notexist
-		-Password: This
-		-Should give message saying wrong username or password
-	-Test to see if correct username/password redirects to the right page
-		-Username: This
-		-Password: This
-		-Should redirect to the correct page with the correct user data
-
-Test Environment: Local Machine/Docker
-
-
-
-Feature 2: Calendar(Adding Meals)
+Feature 1: Calendar(Adding Meals)
 -Test cases/data and Test results:
 	-Test sorting of meals
 		-Test adding a meal to some day 
@@ -57,7 +14,7 @@ Feature 2: Calendar(Adding Meals)
 		-Test adding meals to calendar and logging off and relogging back on the check if data is still there
 			- Add any meals to the calendar and make sure it saves. Then logout and log back in
 		-Should save the user’s personal calendar and personal data
-Feature 4: Progress Page
+Feature 2: Progress Page
 	-Test getting nutrition information for different foods
 		-Test adding up calories for one meal
 			-Try adding multiple meals and verifying calculations are correct
@@ -72,14 +29,12 @@ Feature 4: Progress Page
 
 Test Environment: Local Machine/Docker
 
-Feature 4: BMI Calculator/Calories Needed
+Feature 3: BMI Calculator/Calories Needed
 Test Cases/Data and Test Results:
 	-Enter random inputs and see if calculations are correct 
 		-Use decimals as inputs
 			- Weight is 50kg, Height is 1.5m
-		-Test edge cases 
-			-User inputs 0 for funsies
-			-User puts too large of a number 
+		-Test edge cases  
 			-User inputs a string
 			-Should give errors for these test cases
 			-Check potential rounding errors
@@ -91,7 +46,7 @@ Test Cases/Data and Test Results:
 	-Create calculator right based on credible calculator online for right calculations
 
 
-Feature 5: Meals Database
+Feature 4: Meals Database
 Test Cases/Data and Test Results:
 	- Try leaving any one of the fields is empty and make sure the validation is working correctly
 		- It won't submit without entering all the information
