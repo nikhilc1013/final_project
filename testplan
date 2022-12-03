@@ -13,7 +13,7 @@ Feature 1: Calendar(Adding Meals)
 	-Test saving and updating calendar
 		-Test adding meals to calendar and logging off and relogging back on the check if data is still there
 			- Add any meals to the calendar and make sure it saves. Then logout and log back in
-		-Should save the user’s personal calendar and personal data
+		-Should save the user's personal calendar and personal data
 Feature 2: Progress Page
 	-Test getting nutrition information for different foods
 		-Test adding up calories for one meal
